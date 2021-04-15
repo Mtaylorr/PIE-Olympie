@@ -4,8 +4,8 @@ Le dossier contient le code de déplacement du robot dans la simulateur Gazebo d
 # Reglage de l'environnement : 
 ## Création du Pkg de déplacement 
 On effectue les commandes suivantes : 
-1 - roscd
-2 - cd .. 
+*  roscd
+*  cd .. 
 3 - cd src
 4 - pwd      ( il faut voir "/home/user/catkin_ws/src" affichié dans le console)
 5 - catkin_create_pkg moverobot rospy
