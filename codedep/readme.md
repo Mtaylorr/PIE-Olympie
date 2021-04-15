@@ -18,7 +18,6 @@ On effectue les commandes suivantes :
 * chmod +x move.py
 * move the content of the code Dep.py here in the folder to move.py
 
-\
 
 Avant d'exécuter le pkg il faut faire d'autre réglages : 
 * Importer le code de PathFinding dans ROS (  wget "link_of_source_code" ) 
