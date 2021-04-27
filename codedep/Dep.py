@@ -52,7 +52,7 @@ def turnright(angle):
     while  (not rospy.is_shutdown()) :
         t0 = rospy.Time.now().to_sec()
         current_angle = 0
-        while(current_angle<target_angle):
+        while(not rospy.is_shutdown()) and(current_angle<target_angle):
             pub.publish(command)
             t1=rospy.Time.now().to_sec()
             current_angle= abs(KP)*(t1-t0)
@@ -72,7 +72,7 @@ def turnleft(angle):
     while  (not rospy.is_shutdown()) :
         t0 = rospy.Time.now().to_sec()
         current_angle = 0
-        while(current_angle<target_angle):
+        while(not rospy.is_shutdown()) and(current_angle<target_angle):
             pub.publish(command)
             t1=rospy.Time.now().to_sec()
             current_angle= abs(KP)*(t1-t0)
@@ -94,7 +94,7 @@ def forward(dist):
     while  (not rospy.is_shutdown()) :
         t0 = rospy.Time.now().to_sec()
         current_distance = 0
-        while(current_distance<distance):
+        while(not rospy.is_shutdown()) and(current_distance<distance):
             pub.publish(command)
             t1=rospy.Time.now().to_sec()
             current_distance= speed*(t1-t0)
@@ -105,10 +105,10 @@ def forward(dist):
         break
 
 def getx():
-    return 0
+    return -round(xpose/pas)
 
 def gety():
-    return 0
+    return round(ypose/pas)
 
 rospy.init_node('my_quaternion_to_euler')
 
@@ -121,32 +121,41 @@ c = input("initiate : ready (y,n) : ")
 while(c!='y') :
     c = input("initiate : ready (y,n) : ")
 initiate()
+k=2
 xf , yf = 2 , 2
-xs ,ys = getx(), gety()
-cmd = "./{}PathFinding.out {}map.bin {} {} {} {} {}path.txt".format(di,di,xs,ys,xf,yf,di)
-print(cmd)
-os.system(cmd)
-while(os.path.isfile(di+"path.txt")==0):
-	pass
+while (not rospy.is_shutdown()) and (getx()!=xf or gety()!=yf):
+    xs ,ys = getx(), gety()
+    xs = int(xs)
+    ys = int(ys)
+    print(xs,ys)
+    cmd = "./{}PathFinding.out {}map.bin {} {} {} {} {}path.txt".format(di,di,ys,xs,xf,yf,di)
+    print(cmd)
+    os.system(cmd)
+    while (not rospy.is_shutdown()) and (os.path.isfile(di+"path.txt")==0):
+        pass
 
-f = open("{}path.txt".format(di),"r")
-path = f.readline()
-pas=1
-print(path)
-for c in path :
-	ind = int(c)
-	tar_angle = ind * 45
-	angle_par =  tar_angle-yaw*180/math.pi
-	if(angle_par>180):
-		angle_par-=360
-	if(angle_par>0):
-		turnright(angle_par)
-	else :
-		turnleft(-angle_par)
-	dist = pas
-	if(ind%2):
-		dist*=math.sqrt(2)
-	forward(dist)
+    f = open("{}path.txt".format(di),"r")
+    path = f.readline()
+    print(path)
+    i=0
+    for c in path :
+        if(i==k):
+            break
+        i+=1
+        ind = int(c)
+        tar_angle = ind * 45
+        angle_par =  tar_angle-yaw*180/math.pi
+        if(angle_par>180):
+            angle_par-=360
+        if(angle_par>0):
+            turnright(angle_par)
+        else :
+            turnleft(-angle_par)
+        dist = pas
+        if(ind%2):
+            dist*=math.sqrt(2)
+        forward(dist)
 
-f.close()
-os.system("rm {}path.txt".format(di))
+    f.close()
+    os.system("rm {}path.txt".format(di))
+    print(getx(),gety())
