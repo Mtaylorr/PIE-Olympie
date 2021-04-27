@@ -99,20 +99,27 @@ c = input("initiate : ready (y,n) : ") # just pour commancer le déplacement du 
 
 while(c!='y') :
     c = input("initiate : ready (y,n) : ")
-xf , yf = 2 , 2 # position finale du robot ( c'est donée explicitement pour le moment mais c'est censé donnée par l'utilisateur ) 
-xs ,ys = getx(), gety() # position actuelle du robot
-cmd = "./{}PathFinding.out {}map.bin {} {} {} {} {}path.txt".format(di,di,xs,ys,xf,yf,di) # formulation de la commande de calcul du path du position courante vers la position finale
-os.system(cmd) # exéctuer la commande
-while(os.path.isfile(di+"path.txt")==0): # tant que le fichier n'a pas été généré , on fait rien
-	pass
 
-f = open("{}path.txt".format(di),"r") # on ouvre le fichier qui contient le chemin
-path = f.readline() # on lit les données du fichier qui sont des directions généré par l'autre code
-f.close() # on ferme le fichier
-os.system("rm {}path.txt".format(di)) # on efface le fichier pour le nouveau déplacement
 pas=1 # le pas avec lequelle se déplace le robot à chaque étape  
-for c in path : # on itére sur les instructions de déplacement 
-	ind = int(c) # on convertit l'entier donné comme chaine en entier 
+k=2
+xf , yf = 2 , 2 # position finale du robot ( c'est donée explicitement pour le moment mais c'est censé donnée par l'utilisateur ) 
+while (not rospy.is_shutdown()) and (getx()!=xf or gety()!=yf):
+    xs ,ys = getx(), gety()
+    xs = int(xs)
+    ys = int(ys)
+    cmd = "./{}PathFinding.out {}map.bin {} {} {} {} {}path.txt".format(di,di,ys,xs,xf,yf,di)# formulation de la commande de calcul du path du position courante vers la position finale
+    os.system(cmd)# on efface le fichier pour le nouveau déplacement
+    while (not rospy.is_shutdown()) and (os.path.isfile(di+"path.txt")==0):
+        pass
+
+    f = open("{}path.txt".format(di),"r")
+    path = f.readline()
+    i=0 # nombre d'itérations
+    for c in path :# on itére sur les instructions de déplacement 
+        if(i==k): # si on a fait K déplacement on arrête pour recalculer le chemin
+            break
+        i+=1 # nombre d'iterations incrémente par 1
+        ind = int(c) # on convertit l'entier donné comme chaine en entier 
 	tar_angle = ind * 45 # on calcule l'angle correspondante à la direction voulu 
 	angle_par =  tar_angle-yaw*180/math.pi # calcul de l'angle qu'il faut tourner pour que la direction du robot et de l'instruction coincide
 	if(angle_par>180):  # s'il l'angle est > 180 donc on tourne à gauche c'est mieux
@@ -126,4 +133,6 @@ for c in path : # on itére sur les instructions de déplacement
 		dist*=math.sqrt(2) # si la direction est multiple de 45 degré alors on va déplacer pas * sqrt(2)
 	forward(dist) # déplacer le robot dans cette direction d'un pas
 
+    f.close()# on ferme le fichier
+    os.system("rm {}path.txt".format(di)) #on suprimme le fichier path.txt
 
