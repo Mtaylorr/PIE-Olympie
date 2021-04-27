@@ -79,10 +79,10 @@ def forward(dist):
         break
 
 def getx():
-    return xpose # retourner la position x du robot
+    return -round(xpose/pas) # retourner la position x du robot
 
 def gety():
-    return ypose # retourner la position y du robot
+    return  round(ypose/pas) # retourner la position y du robot
 	
 rospy.init_node('my_quaternion_to_euler')
 
