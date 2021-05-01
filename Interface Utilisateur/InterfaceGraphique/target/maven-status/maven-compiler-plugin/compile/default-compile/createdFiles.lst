@@ -1,0 +1,12 @@
+com\ensta\interfacegraphique\exception\DaoException.class
+com\ensta\interfacegraphique\exception\ServiceException.class
+com\ensta\interfacegraphique\service\PersonnelService.class
+com\ensta\interfacegraphique\service\SalleService.class
+com\ensta\interfacegraphique\dao\PersonnelDao.class
+com\ensta\interfacegraphique\persistence\ConnectionManager.class
+com\ensta\interfacegraphique\model\Personnel.class
+com\ensta\interfacegraphique\servlet\DashboardServlet.class
+com\ensta\interfacegraphique\utils\FillDatabase.class
+com\ensta\interfacegraphique\dao\SalleDao.class
+com\ensta\interfacegraphique\servlet\FollowMeServlet.class
+com\ensta\interfacegraphique\model\Salle.class

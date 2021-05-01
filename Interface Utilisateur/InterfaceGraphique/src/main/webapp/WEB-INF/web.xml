@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         id="WebApp_ID"
+         version="3.0">
+  <display-name>InterfaceGraphique</display-name>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/WEB-INF/View/error_500.jsp</location>
+  </error-page>
+  <welcome-file-list>
+    <welcome-file>
+      /InterfaceGraphique/index.html
+    </welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <servlet-name>dashboard</servlet-name>
+    <servlet-class>InterfaceGraphique.com.ensta.interfacegraphique.servlet.DashboardServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>dashboard</servlet-name>
+    <url-pattern>/InterfaceGraphique/dashboard</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>followme</servlet-name>
+    <servlet-class>InterfaceGraphique.com.ensta.interfacegraphique.servlet.FollowMeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>followme</servlet-name>
+    <url-pattern>/InterfaceGraphique/followme</url-pattern>
+  </servlet-mapping>
+</web-app>

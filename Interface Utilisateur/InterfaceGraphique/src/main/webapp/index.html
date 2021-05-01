@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ROBOT ACCUEIL ENSTA</title>
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+    <script src="assets/js/CheckInput.js"></script>
+    <script language="JavaScript">
+    function redirect(){
+        var val1 = document.getElementById("searchVal");
+        if(val1.value.length != 0){
+            var jspcall = "dashboard?searchVal="+val1.value;
+            window.location.href = jspcall;
+        }
+    }
+    </script>
+</head>
+<body>
+    <div class="body"></div>
+    <div class="grad"></div>
+    <div class="header">
+        <div>ROBOT D'ACCUEIL</div>
+        <div><span><margin>ENSTA</margin></span></div>
+    </div>
+    <br>
+    <div class="search">
+        <input type="text" placeholder="Enter name..." name="searchVal" id="searchVal" onkeyup="validateInputs();"><br>
+        <input type="submit" value="Search" name="searchButton" id="searchButton" class="searchButton" onclick="redirect();" disabled/>
+    </div>
+</body>
+</html>
