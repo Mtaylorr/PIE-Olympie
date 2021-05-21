@@ -2,3 +2,7 @@
 Robot d'accueil pour l'ENSTA
 
 Video de la simulation ROS dans un espace ouvert : [Video](https://enstafr-my.sharepoint.com/:v:/g/personal/mahdi_cheikhrouhou_ensta-paris_fr/EZkvcBdWhTlAhl9saj87rpsBkECkuC98Nbc1tYbrMRtY0w?e=4crXQ0)
+
+
+### Lien du site web  : 
+[https://robot-accueil-2021.data-ensta.fr/](https://robot-accueil-2021.data-ensta.fr/)
